@@ -1,0 +1,258 @@
+/* ============================================ */
+/* cyber-grid-theme                             */
+/* ============================================ */
+
+:root {
+  --green: #00ff88;
+  --green-dim: #00cc6a;
+  --green-glow: rgba(0, 255, 136, 0.15);
+  --amber: #ffb700;
+  --red: #ff4466;
+  --blue: #00aaff;
+  --bg: #050a08;
+  --bg2: #0a1210;
+  --bg3: #0f1c18;
+  --border: rgba(0, 255, 136, 0.2);
+  --text: #c8ffe8;
+  --text-dim: #5a8f75;
+}
+
+/* Font imports */
+* {
+  font-family: 'Exo 2', 'Share Tech Mono', 'Orbitron', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Nền lưới ma trận */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Hiệu ứng scanline */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.15) 2px,
+    rgba(0,0,0,0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Container chính */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Header style */
+.header-badge {
+  display: inline-block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--green);
+  border: 1px solid var(--border);
+  padding: 6px 16px;
+  margin-bottom: 20px;
+  background: var(--green-glow);
+}
+
+h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(32px, 6vw, 64px);
+  font-weight: 900;
+  color: var(--green);
+  text-shadow: 0 0 30px rgba(0,255,136,0.5), 0 0 60px rgba(0,255,136,0.2);
+  letter-spacing: 2px;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text-dim);
+  font-size: 13px;
+  margin-top: 12px;
+  letter-spacing: 2px;
+}
+
+/* Card style - viền bo góc kiểu cyber */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 24px;
+  position: relative;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--green);
+  border-left: 2px solid var(--green);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--green);
+  border-right: 2px solid var(--green);
+}
+
+.card:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 30px var(--green-glow), inset 0 0 30px var(--green-glow);
+}
+
+/* Tags */
+.phase-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  padding: 3px 10px;
+  letter-spacing: 2px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.tag-beginner { color: var(--green); border-color: var(--green); background: rgba(0,255,136,0.08); }
+.tag-intermediate { color: var(--amber); border-color: var(--amber); background: rgba(255,183,0,0.08); }
+.tag-advanced { color: var(--red); border-color: var(--red); background: rgba(255,68,102,0.08); }
+.tag-expert { color: var(--blue); border-color: var(--blue); background: rgba(0,170,255,0.08); }
+
+/* Dots timeline */
+.phase-dot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green);
+  box-shadow: 0 0 20px rgba(0,255,136,0.3);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.phase-line {
+  flex: 1;
+  width: 2px;
+  background: var(--border);
+}
+
+/* Timeline dọc */
+.phases::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom,
+    transparent,
+    var(--green-dim) 5%,
+    var(--green-dim) 95%,
+    transparent
+  );
+  transform: translateX(-50%);
+}
+
+/* Milestone */
+.milestone-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--amber);
+  padding: 8px 20px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--amber);
+  letter-spacing: 2px;
+  box-shadow: 0 0 20px rgba(255,183,0,0.1);
+}
+
+/* Chip tools */
+.tool-chip {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  padding: 3px 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+/* Resource cards */
+.resource-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.resource-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.res-book::before { background: var(--green); }
+.res-hw::before { background: var(--amber); }
+.res-project::before { background: var(--blue); }
+.res-community::before { background: var(--red); }
+
+/* Animations */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile responsive */
+@media (max-width: 700px) {
+  .phases::before { left: 24px; }
+  .phase-dot { width: 40px; height: 40px; font-size: 12px; }
+  .phase-line { display: none; }
+}
